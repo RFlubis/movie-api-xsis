@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Movie API
+  description: API for managing movies
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1
+paths:
+  /movies:
+    get:
+      summary: Retrieve all movies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Movie'
+    post:
+      summary: Create a new movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Movie'
+  /movies/{id}:
+    get:
+      summary: Retrieve a movie by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  data:
+                    $ref: '#/components/schemas/Movie'
+    put:
+      summary: Update a movie by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Movie'
+    delete:
+      summary: Delete a movie by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  message:
+                    type: string
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        rating:
+          type: number
+        image:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
